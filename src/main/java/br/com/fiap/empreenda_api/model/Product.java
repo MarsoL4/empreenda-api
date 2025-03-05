@@ -1,6 +1,7 @@
 package br.com.fiap.empreenda_api.model;
 
 import java.time.LocalDateTime;
+import java.util.Random;
 
 public class Product {
     private long id;
@@ -12,7 +13,7 @@ public class Product {
     private LocalDateTime lastUpdated;
 
     public Product(long id, String name, double costPrice, double salePrice, int initialQuantity) {
-        this.id = id;
+        this.id = Math.abs(new Random().nextLong());
         this.name = name;
         this.costPrice = costPrice;
         this.salePrice = salePrice;
