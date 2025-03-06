@@ -1,6 +1,7 @@
 package br.com.fiap.empreenda_api.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 public class Product {
@@ -21,18 +22,18 @@ public class Product {
         this.lastUpdated = LocalDateTime.now(); // Inicializa a última atualização ao criar o produto
     }
 
-    // Getter para margem de lucro calculada
-    public double getProfitMargin() {
-        return ((salePrice - costPrice) / costPrice) * 100;
+    public String getProfitMargin() {
+        double profitMargin = ((salePrice - costPrice) / costPrice) * 100;
+        return String.format("%.1f", profitMargin); // Formata com 1 casa decimal
     }
 
-    // Método para atualizar a quantidade, a última mudança e a data da última atualização
+    // Atualiza a quantidade, a última mudança e a data da última atualização
     public void updateQuantity(int changeInQuantity) {
         this.lastQuantityChange = changeInQuantity;
         this.quantity += changeInQuantity;
         this.lastUpdated = LocalDateTime.now();
     }
-    
+
     public long getId() {
         return id;
     }
@@ -50,7 +51,7 @@ public class Product {
     }
 
     public double getSalePrice() {
-        return salePrice; // Getter
+        return salePrice;
     }
 
     public void setSalePrice(double salePrice) {
@@ -65,7 +66,8 @@ public class Product {
         return lastQuantityChange;
     }
 
-    public LocalDateTime getLastUpdated() {
-        return lastUpdated;
+    public String getLastUpdated() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return lastUpdated.format(formatter); // Formata a data como YYYY-MM-DD
     }
 }
