@@ -24,8 +24,10 @@ public class ProductController {
     private ProductRepository repository;
 
     @GetMapping
-    public List<Product> index() {
-        return repository.findAll();
+    public List<Product> index(@RequestParam Long usuarioId) {
+        return repository.findAll().stream()
+                .filter(p -> p.getUsuarioId().equals(usuarioId))
+                .toList();
     }
 
     @PostMapping

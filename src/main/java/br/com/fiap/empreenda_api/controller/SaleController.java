@@ -24,8 +24,10 @@ public class SaleController {
     private SaleRepository repository;
 
     @GetMapping
-    public List<Sale> index() {
-        return repository.findAll();
+    public List<Sale> index(@RequestParam Long usuarioId) {
+        return repository.findAll().stream()
+                .filter(s -> s.getUsuarioId().equals(usuarioId))
+                .toList();
     }
 
     @PostMapping
