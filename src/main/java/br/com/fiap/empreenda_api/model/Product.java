@@ -21,9 +21,6 @@ public class Product {
     @Positive
     private double preco;
 
-    @NotNull
-    private Long usuarioId;
-
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -38,7 +35,4 @@ public class Product {
 
     public double getPreco() { return preco; }
     public void setPreco(double preco) { this.preco = preco; }
-
-    public Long getUsuarioId() { return usuarioId; }
-    public void setUsuarioId(Long usuarioId) { this.usuarioId = usuarioId; }
 }

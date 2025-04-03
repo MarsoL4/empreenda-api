@@ -25,9 +25,6 @@ public class Sale {
     @NotBlank
     private String status;
 
-    @NotNull
-    private Long usuarioId;
-
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -45,7 +42,4 @@ public class Sale {
 
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
-
-    public Long getUsuarioId() { return usuarioId; }
-    public void setUsuarioId(Long usuarioId) { this.usuarioId = usuarioId; }
 }
