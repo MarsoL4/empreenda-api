@@ -1,12 +1,16 @@
 package br.com.fiap.empreenda_api.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.empreenda_api.repository.ProductRepository;
 import br.com.fiap.empreenda_api.repository.SaleRepository;
+import io.swagger.v3.oas.annotations.Operation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +19,9 @@ import java.util.Map;
 @RequestMapping("/dashboard")
 public class DashboardController {
 
+    //Logger para registrar as operações do controller
+    private final Logger log = LoggerFactory.getLogger(getClass());
+
     @Autowired
     ProductRepository productRepository;
 
@@ -22,7 +29,15 @@ public class DashboardController {
     SaleRepository saleRepository;
 
     @GetMapping
+    @Operation(
+        summary = "Retorna as informações necessárias para o dashboard",
+        description = "Retorna as informações do dashboard a partir dos dados de produtos e vendas cadastrados" 
+    )
+    @CacheEvict(value = {"products", "sales"}, allEntries = true)
     public Map<String, Object> resumo() {
+        
+        log.info("Efetuando Operações de Cálculo do Dashboard!");
+
         Map<String, Object> data = new HashMap<>();
 
         var produtos = productRepository.findAll();
