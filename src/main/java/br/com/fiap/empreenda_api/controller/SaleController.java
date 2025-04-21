@@ -6,13 +6,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import br.com.fiap.empreenda_api.model.Sale;
+import br.com.fiap.empreenda_api.model.SaleFilters;
 import br.com.fiap.empreenda_api.repository.SaleRepository;
+import br.com.fiap.empreenda_api.specification.SaleSpecification;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -38,6 +44,35 @@ public class SaleController {
         return repository.findAll();
     }
 
+    @GetMapping("/search")
+    @Operation(
+        summary = "Buscar Vendas com filtro, paginação e ordenação",
+        description = """
+            Retorna uma página de Vendas filtrando por:
+            - `cliente` (texto parcial)
+            - `valorMin` e `valorMax` (intervalo de valorTotal)
+            
+            Suporta parâmetros `page`, `size` e `sort`.
+            Exemplo: `/sales/search?cliente=ana&valorMin=50&valorMax=200&size=10&page=0&sort=valorTotal,desc`
+        """
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Parâmetros inválidos"),
+        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+    })
+    public Page<Sale> search(
+        @RequestParam(required = false) String cliente,
+        @RequestParam(required = false) Double valorMin,
+        @RequestParam(required = false) Double valorMax,
+        @PageableDefault(size = 10) Pageable pageable
+    ) {
+        SaleFilters filters = new SaleFilters(cliente, valorMin, valorMax);
+        Specification<Sale> spec = SaleSpecification.withFilters(filters);
+        return repository.findAll(spec, pageable);
+    }
+
+
     @PostMapping
     @CacheEvict(value = "sales", allEntries = true)
     @Operation(
@@ -50,6 +85,7 @@ public class SaleController {
         return repository.save(sale);
     }
 
+
     @GetMapping("/{id}")
     @Operation(
         summary = "Buscar Venda pelo ID",
@@ -61,6 +97,7 @@ public class SaleController {
         return ResponseEntity.ok(getSale(id));
     }
 
+
     @DeleteMapping("/{id}")
     @Operation(
         summary = "Deletar Venda pelo ID",
@@ -71,6 +108,7 @@ public class SaleController {
         repository.delete(getSale(id));
         return ResponseEntity.noContent().build();
     }
+
 
     @PutMapping("/{id}")
     @Operation(
