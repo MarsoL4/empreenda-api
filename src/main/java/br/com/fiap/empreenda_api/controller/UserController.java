@@ -10,8 +10,6 @@ import br.com.fiap.empreenda_api.repository.UserRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -33,24 +31,24 @@ public class UserController {
         return repository.save(user);
     }
 
-    @PostMapping("/login")
-    @Operation(
-        summary = "Autenticar Usuário (Login)",
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Login realizado com sucesso"),
-            @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
-        }
-    )
-    public User login(@RequestBody User loginData) {
-        Optional<User> user = repository.findByEmailAndSenha(
-            loginData.getEmail(),
-            loginData.getSenha()
-        );
+    // @PostMapping("/login")
+    // @Operation(
+    //     summary = "Autenticar Usuário (Login)",
+    //     responses = {
+    //         @ApiResponse(responseCode = "200", description = "Login realizado com sucesso"),
+    //         @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
+    //     }
+    // )
+    // public User login(@RequestBody User loginData) {
+    //     Optional<User> user = repository.findByEmailAndSenha(
+    //         loginData.getEmail(),
+    //         loginData.getPassword()
+    //     );
 
-        if (user.isEmpty()) {
-            throw new RuntimeException("Usuário ou senha inválidos");
-        }
+    //     if (user.isEmpty()) {
+    //         throw new RuntimeException("Usuário ou senha inválidos");
+    //     }
 
-        return user.get();
-    }
+    //     return user.get();
+    // }
 }

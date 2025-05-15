@@ -3,16 +3,25 @@ package br.com.fiap.empreenda_api.config;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import br.com.fiap.empreenda_api.model.Product;
 import br.com.fiap.empreenda_api.model.Sale;
+import br.com.fiap.empreenda_api.model.User;
 import br.com.fiap.empreenda_api.repository.ProductRepository;
 import br.com.fiap.empreenda_api.repository.SaleRepository;
+import br.com.fiap.empreenda_api.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 
 @Component
 public class DataBaseSeeder {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     
     @Autowired 
     private ProductRepository productRepository;
@@ -22,6 +31,13 @@ public class DataBaseSeeder {
 
     @PostConstruct // Será executado após a injeção de dependências e inicialização do projeto
     public void init() {
+
+        String password = passwordEncoder.encode("12345");
+        var enzo = User.builder().name("enzo").email("enzo@fiap.com.br").password(password).build();
+        var maria = User.builder().name("maria").email("maria@fiap.com.br").password(password).build();
+        userRepository.saveAll(List.of(enzo, maria));
+
+
         productRepository.saveAll(List.of(
             Product.builder()
                 .nome("Água Mineral 500ml")
