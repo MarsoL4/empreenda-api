@@ -3,11 +3,14 @@ package br.com.fiap.empreenda_api.config;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import br.com.fiap.empreenda_api.model.FormaPagamentoType;
 import br.com.fiap.empreenda_api.model.Product;
 import br.com.fiap.empreenda_api.model.Sale;
+import br.com.fiap.empreenda_api.model.StatusSaleType;
 import br.com.fiap.empreenda_api.model.User;
 import br.com.fiap.empreenda_api.repository.ProductRepository;
 import br.com.fiap.empreenda_api.repository.SaleRepository;
@@ -15,6 +18,7 @@ import br.com.fiap.empreenda_api.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 
 @Component
+@Profile("dev")
 public class DataBaseSeeder {
 
     @Autowired
@@ -66,24 +70,24 @@ public class DataBaseSeeder {
                 .cliente("João Silva")
                 .quantidade(10)
                 .valorTotal(89.00)
-                .formaPagamento("Pix")
-                .status("Confirmado")
+                .formaPagamento(FormaPagamentoType.Pix)
+                .status(StatusSaleType.Confirmado)
                 .build(),
 
             Sale.builder()
                 .cliente("Maria Oliveira")
                 .quantidade(5)
                 .valorTotal(30.00)
-                .formaPagamento("Cartão")
-                .status("Pendente")
+                .formaPagamento(FormaPagamentoType.Cartão_Crédito)
+                .status(StatusSaleType.Pendente)
                 .build(),
 
             Sale.builder()
                 .cliente("Carlos Souza")
                 .quantidade(2)
                 .valorTotal(12.00)
-                .formaPagamento("Dinheiro")
-                .status("Confirmado")
+                .formaPagamento(FormaPagamentoType.Boleto)
+                .status(StatusSaleType.Cancelado)
                 .build()
         ));
     }

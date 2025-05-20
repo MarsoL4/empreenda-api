@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.fiap.empreenda_api.model.StatusSaleType;
 import br.com.fiap.empreenda_api.repository.ProductRepository;
 import br.com.fiap.empreenda_api.repository.SaleRepository;
 import io.swagger.v3.oas.annotations.Operation;
@@ -49,8 +50,8 @@ public class DashboardController {
 
         int vendasHoje = vendas.size();
         double faturamento = vendas.stream().mapToDouble(v -> v.getValorTotal()).sum();
-        int pagos = (int) vendas.stream().filter(v -> v.getStatus().equalsIgnoreCase("Confirmado")).count();
-        int pendentes = (int) vendas.stream().filter(v -> v.getStatus().equalsIgnoreCase("Pendente")).count();
+        int pagos = (int) vendas.stream().filter(v -> v.getStatus().equals(StatusSaleType.Confirmado)).count();
+        int pendentes = (int) vendas.stream().filter(v -> v.getStatus().equals(StatusSaleType.Pendente)).count();
 
         data.put("vendasHoje", vendasHoje);
         data.put("estoqueAtual", estoqueAtual);
