@@ -20,8 +20,10 @@ public class Product {
 
     @NotBlank(message = "O nome do produto não pode ficar em branco")
     @NotNull(message = "O nome do produto não pode ser vazio")
+    @Size(min = 3)
     private String nome;
 
+    @Size(min = 5, message = "A descrição do Produto deve ter no mínimo 5 caracteres")
     private String descricao;
 
     @PositiveOrZero

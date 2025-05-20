@@ -35,6 +35,7 @@ public class User implements UserDetails{
 
     @NotBlank(message = "O nome do usuário não pode estar em branco")
     @NotNull(message = "O nome do usuário não pode ser vazio")
+    @Size(min = 3, message = "O nome do usuário deve ter pelo menos 3 caracteres")
     private String name;
 
     @Email(message = "email inválido")
@@ -44,7 +45,7 @@ public class User implements UserDetails{
 
     @NotBlank(message = "campo obrigatório")
     @NotNull(message = "A senha não pode ser nula")
-    @Size(min = 5)
+    @Size(min = 5, message = "a senha deve ter no mínimo 5 caracteres")
     private String password;
 
     @Override

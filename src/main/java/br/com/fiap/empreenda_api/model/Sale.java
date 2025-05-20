@@ -24,6 +24,7 @@ public class Sale {
 
     @NotBlank(message = "Cliente não pode estar em branco")
     @NotNull(message = "Não é possível cdastrar uma venda com cliente nulo")
+    @Size(min = 3)
     private String cliente;
 
     @Positive
