@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.empreenda_api.model.StatusSaleType;
 import br.com.fiap.empreenda_api.repository.ProductRepository;
 import br.com.fiap.empreenda_api.repository.SaleRepository;
+import br.com.fiap.empreenda_api.service.AiAnaliseService;
 import io.swagger.v3.oas.annotations.Operation;
 
 import java.util.HashMap;
@@ -28,6 +30,9 @@ public class DashboardController {
 
     @Autowired
     SaleRepository saleRepository;
+
+    @Autowired
+    private AiAnaliseService aiService;
 
     @GetMapping
     @Operation(
@@ -65,5 +70,15 @@ public class DashboardController {
         data.put("totalProdutos", totalProdutos);
 
         return data;
+    }
+
+    @GetMapping("/analise/products")
+    public String analiseProducts(@RequestParam String lang){
+        return aiService.getProductsAnalise(lang);
+    }
+    
+    @GetMapping("/analise/sales")
+    public String analiseSales(@RequestParam String lang){
+        return aiService.getSalesAnalise(lang);
     }
 }
