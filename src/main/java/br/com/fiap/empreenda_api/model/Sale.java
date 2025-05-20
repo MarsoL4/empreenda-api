@@ -1,5 +1,7 @@
 package br.com.fiap.empreenda_api.model;
 
+import java.time.LocalDate;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
@@ -39,6 +41,10 @@ public class Sale {
     @NotNull
     @Enumerated(EnumType.STRING)
     private StatusSaleType status;
+
+    @PastOrPresent(message = "deve ser no passado ou hoje")
+    @JsonIgnore
+    private LocalDate date;
 
     @ManyToOne
     @JsonIgnore 

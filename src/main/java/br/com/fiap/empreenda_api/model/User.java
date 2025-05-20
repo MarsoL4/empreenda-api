@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,7 +33,8 @@ public class User implements UserDetails{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "O nome do usuário não pode estar em branco")
+    @NotNull(message = "O nome do usuário não pode ser vazio")
     private String name;
 
     @Email(message = "email inválido")
@@ -40,6 +42,8 @@ public class User implements UserDetails{
     @Column(unique = true)
     private String email;
 
+    @NotBlank(message = "campo obrigatório")
+    @NotNull(message = "A senha não pode ser nula")
     @Size(min = 5)
     private String password;
 
