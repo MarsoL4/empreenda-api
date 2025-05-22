@@ -96,7 +96,3 @@ http://localhost:8080/db
 ## Testes
 
 - Estrutura preparada para testes com `spring-boot-starter-test`.
-
-## Licença
-
-Este projeto é livre para uso acadêmico e educacional.
