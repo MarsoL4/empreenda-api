@@ -28,7 +28,11 @@ public class SecurityConfig {
         return http.authorizeHttpRequests(
             auth -> auth
                 //.requestMatchers("/categories/**").hasRole("ADMIN") //Somente usuários com o role de ADMIN poderão fazer requisições nas endpoints de categories
+                
+                // Para testar no front: 
+                // 1 - comentar essa linha abaixo
                 .requestMatchers("/login/**").permitAll() //Essa requisição não precisa de autenticação (pode ser feita por qualquer um)
+                // 2 - trocar .authenticated() por .permitAll()
                 .anyRequest().authenticated() //Qualquer usuário pode fazer requisições nas outras endpoints desde que esteja logado e autenticado
                 
         )
