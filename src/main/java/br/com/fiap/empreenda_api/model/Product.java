@@ -1,5 +1,7 @@
 package br.com.fiap.empreenda_api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -33,4 +35,8 @@ public class Product {
     @Positive
     @NotNull(message = "O preço do produto não pode ser nulo")
     private double preco;
+
+    @ManyToOne
+    @JsonIgnore 
+    private User user;
 }
