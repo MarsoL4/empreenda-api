@@ -5,6 +5,7 @@ API desenvolvida para o projeto **EmpreendaMais**, oferecendo recursos para aute
 
 ## Descrição
 
+
 Esta aplicação foi construída utilizando **Spring Boot 3.4.3** com Java 17, seguindo arquitetura RESTful, com foco em segurança, integração com IA, e documentação automatizada.
 
 ## Tecnologias Utilizadas
