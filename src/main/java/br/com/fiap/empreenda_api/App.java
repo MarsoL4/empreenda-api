@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 @OpenAPIDefinition(
 	info = @Info(title = "EmpreendaPlus API", version = "v1", description = "API do SaaS EmpreendaPlus")
 )
+	
 @EnableCaching
 public class App {
 
