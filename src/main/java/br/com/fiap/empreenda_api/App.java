@@ -7,7 +7,6 @@ import org.springframework.cache.annotation.EnableCaching;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 
-
 @SpringBootApplication
 @OpenAPIDefinition(
 	info = @Info(title = "EmpreendaPlus API", version = "v1", description = "API do SaaS EmpreendaPlus")
