@@ -68,7 +68,7 @@ http://localhost:8080/swagger-ui/index.html
 2. **Clonar o repositório**:
 
 ```bash
-git clone [<url-do-repositorio>](https://github.com/MarsoL4/empreenda-api)
+git clone https://github.com/MarsoL4/empreenda-api
 cd empreenda-api
 ```
 
